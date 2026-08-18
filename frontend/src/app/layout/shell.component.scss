@@ -1,0 +1,36 @@
+.topbar {
+  background: #143325;
+  color: #f4efe4;
+  gap: 12px;
+}
+
+.brand {
+  color: #f4efe4;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.subtitle {
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+nav a {
+  color: #f4efe4;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.content {
+  padding: 20px 24px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}

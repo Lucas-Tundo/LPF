@@ -1,0 +1,29 @@
+.login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at top, #1f5c3d, transparent 40%),
+    #102117;
+}
+
+mat-card {
+  width: min(440px, calc(100vw - 32px));
+  padding: 32px;
+  background: #f7f4ec;
+}
+
+h1 {
+  margin: 0 0 8px;
+  letter-spacing: 0.12em;
+}
+
+p {
+  margin: 0 0 24px;
+  color: #3b463f;
+}
+
+.error {
+  margin-top: 16px;
+  color: #9b1c1c;
+}

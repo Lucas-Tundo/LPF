@@ -1,0 +1,47 @@
+<section class="header">
+  <div>
+    <h1>Visão anual {{ year }}</h1>
+    <p>Totais de cada mês, no mesmo cálculo do DRE.</p>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Ano</mat-label>
+    <mat-select [(ngModel)]="year" (selectionChange)="reload()">
+      @for (item of years; track item) {
+        <mat-option [value]="item">{{ item }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</section>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+<table>
+  <thead>
+    <tr>
+      <th>Mês</th>
+      <th>Receita paga</th>
+      <th>Desp. fixa paga</th>
+      <th>Desp. var. paga</th>
+      <th>Total A+B</th>
+      <th>Deveria sobrar</th>
+      <th>O que sobrou</th>
+      <th>Diferença</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of rows(); track row.month) {
+      <tr>
+        <td>{{ months[row.month - 1] }}</td>
+        <td>{{ row.totals.revenue.paid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td>{{ row.totals.subtotalA.paid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td>{{ row.totals.subtotalB.paid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td>{{ row.totals.totalAbPaid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td>{{ row.totals.expectedRemaining | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+        <td>{{ row.totals.actualRemaining == null ? '—' : (row.totals.actualRemaining | currency:'BRL':'symbol':'1.2-2':'pt-BR') }}</td>
+        <td>{{ row.totals.closingDifference == null ? '—' : (row.totals.closingDifference | currency:'BRL':'symbol':'1.2-2':'pt-BR') }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

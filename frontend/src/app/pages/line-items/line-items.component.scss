@@ -1,0 +1,46 @@
+.header {
+  margin-bottom: 20px;
+}
+
+h1, h2 {
+  margin: 0 0 8px;
+}
+
+.forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #eee7da;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #d7cebf;
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+.error {
+  color: #9b1c1c;
+}

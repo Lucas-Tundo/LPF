@@ -1,0 +1,116 @@
+<section class="header">
+  <div>
+    <h1>{{ title() }}</h1>
+    <p>Previsão, valor pago, situação automática (PG/A) e diferença — como na planilha.</p>
+  </div>
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Mês</mat-label>
+      <mat-select [(ngModel)]="month" (selectionChange)="reload()">
+        @for (label of months; track $index) {
+          <mat-option [value]="$index + 1">{{ label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ano</mat-label>
+      <mat-select [(ngModel)]="year" (selectionChange)="reload()">
+        @for (item of years; track item) {
+          <mat-option [value]="item">{{ item }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</section>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+@if (dre(); as data) {
+  <div class="sheet">
+    <table>
+      <thead>
+        <tr>
+          <th>Grupo</th>
+          <th>Categoria</th>
+          <th>Item</th>
+          <th>Situação</th>
+          <th>Previsão</th>
+          <th>V. pago</th>
+          <th>Diferença</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (group of data.groups; track group.id) {
+          @for (category of group.categories; track category.id) {
+            @for (line of category.lines; track line.id) {
+              <tr [class]="groupClass(group)">
+                <td>{{ group.name }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ line.name }}</td>
+                <td>
+                  <span class="chip" [class]="statusClass(line.status)">{{ line.status === 'PG' ? 'PG' : 'A' }}</span>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    step="0.01"
+                    [value]="line.forecast"
+                    (blur)="saveLine(line, $any($event.target).value, paidText(line))"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    step="0.01"
+                    [value]="line.paidAmount == null ? '' : line.paidAmount"
+                    (blur)="saveLine(line, forecastText(line), $any($event.target).value)"
+                  />
+                </td>
+                <td class="num">{{ line.difference == null ? '' : (line.difference | currency:'BRL':'symbol':'1.2-2':'pt-BR') }}</td>
+              </tr>
+            }
+          }
+          <tr class="subtotal">
+            <td colspan="4">Total {{ group.name }}</td>
+            <td class="num">{{ group.totals.forecast | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+            <td class="num">{{ group.totals.paid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+            <td class="num">{{ group.totals.difference | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">TOTAL A+B</td>
+          <td></td>
+          <td class="num">{{ data.totals.totalAbPaid | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4">Qnd deveria sobrar</td>
+          <td></td>
+          <td class="num">{{ data.totals.expectedRemaining | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4">O que sobrou</td>
+          <td></td>
+          <td>
+            <input type="number" step="0.01" [(ngModel)]="remainingInput" (blur)="saveClosing()" />
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4">Diferença</td>
+          <td></td>
+          <td class="num">{{ data.totals.closingDifference == null ? '' : (data.totals.closingDifference | currency:'BRL':'symbol':'1.2-2':'pt-BR') }}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+}

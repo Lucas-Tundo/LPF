@@ -1,0 +1,10 @@
+<section class="login">
+  <mat-card>
+    <h1>LPF</h1>
+    <p>Demonstrativo de resultado pessoal, no mesmo modelo da planilha.</p>
+    <button mat-flat-button color="primary" type="button" (click)="login()">Entrar com Google</button>
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+  </mat-card>
+</section>

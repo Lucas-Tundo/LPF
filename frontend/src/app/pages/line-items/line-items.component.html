@@ -1,0 +1,71 @@
+<section class="header">
+  <div>
+    <h1>Linhas e categorias</h1>
+    <p>Cadastre novos itens para o DRE. Categorias vazias (Beleza, Saúde) também recebem linhas aqui.</p>
+  </div>
+</section>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+<div class="forms">
+  <form (submit)="$event.preventDefault(); addLine()">
+    <h2>Nova linha</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Categoria</mat-label>
+      <mat-select [(ngModel)]="newItemCategory" name="category">
+        @for (category of categories(); track category.id) {
+          <mat-option [value]="category.id">{{ category.groupName }} — {{ category.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="newItemName" name="itemName" />
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Adicionar linha</button>
+  </form>
+
+  <form (submit)="$event.preventDefault(); addCategory()">
+    <h2>Nova categoria</h2>
+    <mat-form-field appearance="outline">
+      <mat-label>Grupo</mat-label>
+      <mat-select [(ngModel)]="newCategoryGroup" name="group">
+        @for (group of groups(); track group.id) {
+          <mat-option [value]="group.id">{{ group.name }} ({{ kindLabel(group.kind) }})</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="newCategoryName" name="categoryName" />
+    </mat-form-field>
+    <button mat-stroked-button type="submit">Adicionar categoria</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Grupo</th>
+      <th>Categoria</th>
+      <th>Linha</th>
+      <th>Ativa</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of items(); track item.id) {
+      <tr>
+        <td>{{ item.groupName }}</td>
+        <td>{{ item.categoryName }}</td>
+        <td>
+          <input [value]="item.name" (blur)="rename(item, $any($event.target).value)" />
+        </td>
+        <td>
+          <mat-slide-toggle [checked]="item.active" (change)="toggle(item, $event.checked)" />
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

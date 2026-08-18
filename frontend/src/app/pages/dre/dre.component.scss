@@ -1,0 +1,107 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0 0 4px;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+}
+
+.error {
+  color: #9b1c1c;
+}
+
+.sheet {
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #d9d1c3;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 980px;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee7da;
+  text-align: left;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: #143325;
+  color: #f4efe4;
+  z-index: 1;
+}
+
+.num, td input {
+  text-align: right;
+}
+
+td input {
+  width: 120px;
+  border: 1px solid #d7cebf;
+  border-radius: 4px;
+  padding: 4px 6px;
+  background: #fffdf8;
+}
+
+.chip {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.pg {
+  background: #d8f3e3;
+  color: #0f7a43;
+}
+
+.aberto {
+  background: #fbe7cc;
+  color: #9a5808;
+}
+
+.receita td:nth-child(1),
+.receita td:nth-child(2),
+.receita td:nth-child(3) {
+  background: #f3fbf6;
+}
+
+.fixa td:nth-child(1),
+.fixa td:nth-child(2),
+.fixa td:nth-child(3) {
+  background: #fff8ef;
+}
+
+.variavel td:nth-child(1),
+.variavel td:nth-child(2),
+.variavel td:nth-child(3) {
+  background: #f7f3ff;
+}
+
+.subtotal {
+  font-weight: 700;
+  background: #efe8d8;
+}
+
+tfoot tr {
+  font-weight: 700;
+  background: #e4efe8;
+}
